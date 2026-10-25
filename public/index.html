@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Archaeologist // Terminal</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏺</text></svg>">
+    <link href="/output.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+   
+
+</head>
+<body class="text-zinc-300 font-sans flex h-screen overflow-hidden antialiased">
+
+    <!-- Sidebar: Hidden on mobile, visible on desktop -->
+    <aside class="hidden md:flex w-16 border-r border-border flex-col items-center py-6 gap-6 bg-obsidian z-20 shrink-0">
+        <div class="text-accent font-mono font-bold text-xl tracking-tighter cursor-pointer hover:animate-pulse">DA_</div>
+        <div class="p-2 bg-surface rounded border border-border text-accent cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+        
+        <!-- Header -->
+        <header class="h-16 border-b border-border flex items-center justify-between px-4 md:px-6 bg-obsidian/90 backdrop-blur-md z-10 shrink-0">
+            <div class="flex items-center gap-3">
+                <div class="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+                <h1 class="text-white text-sm font-mono tracking-widest uppercase">Bug.API</h1>
+            </div>
+            <div class="flex items-center gap-4 font-mono text-xs text-zinc-500">
+                <span class="hidden sm:inline">STATUS: ONLINE</span>
+                <div class="w-8 h-8 rounded bg-surface border border-border flex items-center justify-center text-accent font-bold">👾</div>
+            </div>
+        </header>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 lg:h-full">
+                
+                <!-- RIGHT COLUMN (Form): Order 1 on Mobile (Top), Order 2 on Desktop (Right) -->
+                <!-- lg:self-start & sticky top-6 makes it stick properly -->
+                <div class="lg:col-span-4 order-1 lg:order-2 lg:sticky lg:top-6 lg:self-start z-20">
+                    <div class="bg-surface border border-border p-5 shadow-2xl">
+                        <div class="border-b border-border pb-3 mb-4">
+                            <h2 class="text-white font-mono text-sm uppercase tracking-widest flex items-center gap-2">
+                                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                Log_New_Error
+                            </h2>
+                        </div>
+                        
+                        <form id="bugForm" class="flex flex-col gap-4">
+                            <div>
+                                <label class="text-[10px] font-mono text-zinc-500 mb-1 block uppercase">Error_Message *</label>
+                                <input type="text" id="error_message" required class="bg-obsidian border border-border p-3 text-white outline-none focus:border-accent w-full text-sm font-mono transition-colors">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-[10px] font-mono text-zinc-500 mb-1 block uppercase">Language</label>
+                                    <input type="text" id="language" placeholder="JS, Python..." class="bg-obsidian border border-border p-3 text-white outline-none focus:border-accent w-full text-sm font-mono transition-colors">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-mono text-zinc-500 mb-1 block uppercase">Topic</label>
+                                    <input type="text" id="topic" placeholder="React, Arrays..." class="bg-obsidian border border-border p-3 text-white outline-none focus:border-accent w-full text-sm font-mono transition-colors">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-[10px] font-mono text-zinc-500 mb-1 block uppercase">The_Solution</label>
+                                <textarea id="solution" rows="2" placeholder="How was it fixed?" class="bg-obsidian border border-border p-3 text-white outline-none focus:border-accent w-full text-sm font-mono transition-colors resize-none"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="text-[10px] font-mono text-zinc-500 mb-1 block uppercase">The_Reason</label>
+                                <textarea id="reason" rows="2" placeholder="Root cause?" class="bg-obsidian border border-border p-3 text-white outline-none focus:border-accent w-full text-sm font-mono transition-colors resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="mt-2 bg-accent/10 border border-accent text-accent hover:bg-accent hover:text-obsidian p-3 font-mono text-sm uppercase tracking-widest font-bold transition-all w-full">
+                                [ Execute_Save ]
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- LEFT COLUMN (Stats, Charts, Logs): Order 2 on Mobile (Bottom), Order 1 on Desktop (Left) -->
+                <div class="lg:col-span-8 order-2 lg:order-1 flex flex-col gap-6">
+                    
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-surface border border-border p-4 relative overflow-hidden group">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-accent"></div>
+                            <p class="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Total_Records</p>
+                            <p class="text-2xl font-mono font-bold text-white" id="statTotalBugs">0</p>
+                        </div>
+                        <div class="bg-surface border border-border p-4 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-amber"></div>
+                            <p class="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Primary_Lang</p>
+                            <p class="text-xl font-mono font-bold text-amber truncate" id="statTopLang">NULL</p>
+                        </div>
+                        <div class="bg-surface border border-border p-4 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+                            <p class="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Frequent_Topic</p>
+                            <p class="text-xl font-mono font-bold text-error truncate" id="statTopTopic">NULL</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Container -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-surface border border-border p-5 shadow-lg">
+                            <h2 class="text-zinc-400 font-mono text-xs uppercase tracking-widest mb-4">Language_Distribution</h2>
+                            <div class="h-48 w-full flex items-center justify-center relative">
+                                <canvas id="langChart"></canvas>
+                                <div id="noDataLang" class="absolute text-zinc-600 font-mono text-xs hidden">NO_DATA_FOUND</div>
+                            </div>
+                        </div>
+                        <div class="bg-surface border border-border p-5 shadow-lg">
+                            <h2 class="text-zinc-400 font-mono text-xs uppercase tracking-widest mb-4">Topic_Frequency</h2>
+                            <div class="h-48 w-full">
+                                <canvas id="topicChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Discoveries List (Scrollable on Desktop, grows naturally on Mobile) -->
+                    <div class="bg-surface border border-border flex flex-col shadow-lg overflow-hidden lg:max-h-[600px]">
+                        <div class="p-4 border-b border-border bg-surface z-10 flex justify-between items-center shrink-0">
+                            <h2 class="text-zinc-400 font-mono text-xs uppercase tracking-widest">Recent_Discoveries</h2>
+                            <span class="text-[10px] font-mono text-zinc-600">AWAITING_INPUT</span>
+                        </div>
+                        <!-- Internal scroll on desktop, natural scroll on mobile -->
+                        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="bugList">
+                            <p class="text-zinc-600 text-xs font-mono italic">Loading records...</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = '/bugs';
+        const bugForm = document.getElementById('bugForm');
+        const bugList = document.getElementById('bugList');
+        let langChart = null;
+        let topicChart = null;
+
+        async function fetchBugs() {
+            try {
+                const res = await fetch(API_URL);
+                const bugs = await res.json();
+                updateStats(bugs);
+                renderList(bugs);
+                renderCharts(bugs); 
+            } catch (err) {
+                console.error("Error fetching bugs:", err);
+                bugList.innerHTML = '<p class="text-error text-xs font-mono">CONNECTION_FAILED.</p>';
+            }
+        }
+
+        function updateStats(bugs) {
+            document.getElementById('statTotalBugs').innerText = String(bugs.length).padStart(2, '0');
+
+            if (bugs.length > 0) {
+                const langs = bugs.map(b => b.language).filter(Boolean);
+                const topics = bugs.map(b => b.topic).filter(Boolean);
+
+                if(langs.length > 0) {
+                    const langCounts = langs.reduce((acc, lang) => { acc[lang] = (acc[lang] || 0) + 1; return acc; }, {});
+                    const topLang = Object.keys(langCounts).reduce((a, b) => langCounts[a] > langCounts[b] ? a : b, "");
+                    document.getElementById('statTopLang').innerText = topLang;
+                } else { document.getElementById('statTopLang').innerText = "N/A"; }
+
+                if(topics.length > 0) {
+                    const topicCounts = topics.reduce((acc, topic) => { acc[topic] = (acc[topic] || 0) + 1; return acc; }, {});
+                    const topTopic = Object.keys(topicCounts).reduce((a, b) => topicCounts[a] > topicCounts[b] ? a : b, "");
+                    document.getElementById('statTopTopic').innerText = topTopic;
+                } else { document.getElementById('statTopTopic').innerText = "N/A"; }
+            } else {
+                document.getElementById('statTopLang').innerText = "N/A";
+                document.getElementById('statTopTopic').innerText = "N/A";
+            }
+        }
+
+        function renderList(bugs) {
+            bugList.innerHTML = '';
+            if (bugs.length === 0) {
+                bugList.innerHTML = '<p class="text-zinc-600 text-xs font-mono italic text-center py-6">> No records found in database.</p>';
+                return;
+            }
+
+            bugs.reverse().forEach(bug => {
+                const date = new Date(bug.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                bugList.innerHTML += `
+                    <div class="bg-obsidian border border-border p-3 relative group transition-all hover:border-zinc-600">
+                        <div class="flex flex-wrap justify-between items-start mb-2 gap-2">
+                            <div class="flex flex-wrap gap-2 items-center">
+                                <span class="text-[10px] text-zinc-500 font-mono bg-surface px-1.5 py-0.5 border border-border">${date}</span>
+                                <span class="text-[10px] text-amber font-mono bg-amber/10 px-1.5 py-0.5 border border-amber/20">${bug.language || 'UNKNOWN'}</span>
+                                <span class="text-[10px] text-zinc-400 font-mono bg-surface px-1.5 py-0.5 border border-border">${bug.topic || 'NULL'}</span>
+                            </div>
+                            <button onclick="deleteBug(${bug.id})" class="text-zinc-600 hover:text-error transition-colors opacity-100 lg:opacity-0 lg:group-hover:opacity-100" title="Purge Record">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            </button>
+                        </div>
+                        <p class="text-error font-mono text-xs mb-1 break-all"><span class="text-zinc-600 select-none">ERR:</span> ${bug.error_message}</p>
+                        <p class="text-accent font-mono text-xs mb-1 break-all"><span class="text-zinc-600 select-none">FIX:</span> ${bug.solution || 'N/A'}</p>
+                        <p class="text-zinc-400 text-[11px] font-sans mt-1 border-t border-border/50 pt-1"><span class="text-zinc-600 font-mono">REASON:</span> ${bug.reason || 'N/A'}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function renderCharts(bugs) {
+            const langCounts = {};
+            bugs.forEach(b => { if(b.language) langCounts[b.language] = (langCounts[b.language] || 0) + 1; });
+            
+            const topicCounts = {};
+            bugs.forEach(b => { if(b.topic) topicCounts[b.topic] = (topicCounts[b.topic] || 0) + 1; });
+            const sortedTopics = Object.entries(topicCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+            const ctxLang = document.getElementById('langChart').getContext('2d');
+            if (langChart) langChart.destroy();
+            
+            if (Object.keys(langCounts).length > 0) {
+                document.getElementById('noDataLang').classList.add('hidden');
+                langChart = new Chart(ctxLang, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(langCounts),
+                        datasets: [{
+                            data: Object.values(langCounts),
+                            backgroundColor: ['#10b981', '#f59e0b', '#f43f5e', '#3b82f6', '#a855f7'],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, cutout: '70%',
+                        plugins: { legend: { position: 'right', labels: { color: '#a1a1aa', font: { family: 'JetBrains Mono', size: 10 } } } }
+                    }
+                });
+            } else {
+                document.getElementById('noDataLang').classList.remove('hidden');
+            }
+
+            const ctxTopic = document.getElementById('topicChart').getContext('2d');
+            if (topicChart) topicChart.destroy();
+
+            topicChart = new Chart(ctxTopic, {
+                type: 'bar',
+                data: {
+                    labels: sortedTopics.map(t => t[0]),
+                    datasets: [{
+                        label: 'Occurrences',
+                        data: sortedTopics.map(t => t[1]),
+                        backgroundColor: '#10b981',
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#a1a1aa', font: { family: 'JetBrains Mono', size: 10 } } },
+                        y: { grid: { color: '#2a2a2a' }, ticks: { color: '#a1a1aa', stepSize: 1, precision: 0, font: { family: 'JetBrains Mono', size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        bugForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newBug = {
+                error_message: document.getElementById('error_message').value,
+                solution: document.getElementById('solution').value,
+                reason: document.getElementById('reason').value,
+                language: document.getElementById('language').value,
+                topic: document.getElementById('topic').value
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newBug)
+                });
+                
+                if (res.ok) {
+                    bugForm.reset();
+                    fetchBugs(); 
+                } else {
+                    const err = await res.json();
+                    alert('Error: ' + err.error);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Network error!');
+            }
+        });
+
+        async function deleteBug(id) {
+            if(!confirm("Purge this record from the database?")) return;
+            try {
+                const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                if(res.ok) fetchBugs(); 
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        fetchBugs();
+    </script>
+</body>
+</html>
